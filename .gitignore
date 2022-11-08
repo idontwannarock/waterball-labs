@@ -207,3 +207,5 @@ buildNumber.properties
 *.asta
 C1M2/poker-showdown-example/
 *.uml
+C1M2/poker-showdown/.idea
+*.iml

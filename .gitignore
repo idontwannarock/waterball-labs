@@ -210,3 +210,4 @@ C1M2/poker-showdown-example/
 C1M2/poker-showdown/.idea
 *.iml
 *.asta.lock
+.idea/

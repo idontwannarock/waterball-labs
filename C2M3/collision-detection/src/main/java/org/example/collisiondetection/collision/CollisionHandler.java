@@ -7,7 +7,7 @@ public abstract class CollisionHandler {
 
     private final CollisionHandler nextHandler;
 
-    public CollisionHandler(CollisionHandler nextHandler) {
+    protected CollisionHandler(CollisionHandler nextHandler) {
         this.nextHandler = nextHandler;
     }
 
@@ -40,7 +40,7 @@ public abstract class CollisionHandler {
     }
 
     private Sprite getTarget(Sprite current, boolean isMovingForward) {
-        return isMovingForward ? current.next : current.prev;
+        return isMovingForward ? current.getNext() : current.getPrev();
     }
 
     private boolean hasNextHandler() {

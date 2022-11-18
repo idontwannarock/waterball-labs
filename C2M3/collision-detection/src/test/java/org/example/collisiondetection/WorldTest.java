@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class WorldTest {
+class WorldTest {
 
     private World world;
 
     @Test
-    public void givenNewWorld_whenEnteringInvalidCoordinates_thenThrownIllegalArgumentException() {
+    void givenNewWorld_whenEnteringInvalidCoordinates_thenThrownIllegalArgumentException() {
         // arrange
         givenWorld(null);
 
@@ -24,7 +24,7 @@ public class WorldTest {
     }
 
     @Test
-    public void givenTwoSpritesWorld_whenMoveFirstSpriteWithoutCollideWithTheOther_thenMoveSucceeded() {
+    void givenTwoSpritesWorld_whenMoveFirstSpriteWithoutCollideWithTheOther_thenMoveSucceeded() {
         // arrange
         givenWorld(null, givenHeroAt(0), givenHeroAt(2));
 
@@ -32,11 +32,11 @@ public class WorldTest {
         moveFirstSpriteOneStep();
 
         // assert
-        assertEquals(1, this.world.sprites.head.coordinate);
+        assertEquals(1, this.world.sprites.getSprites().getCoordinate());
     }
 
     @Test
-    public void givenTwoFire_whenMoveFirstFireCollideWithTheOther_thenMoveFailed() {
+    void givenTwoFire_whenMoveFirstFireCollideWithTheOther_thenMoveFailed() {
         // arrange
         Fire first = givenFireAt(0);
         Fire second = givenFireAt(1);
@@ -46,12 +46,12 @@ public class WorldTest {
         moveFirstSpriteOneStep();
 
         // assert
-        assertEquals(first, this.world.sprites.head);
-        assertEquals(second, this.world.sprites.head.next);
+        assertEquals(first, this.world.sprites.getSprites());
+        assertEquals(second, this.world.sprites.getSprites().getNext());
     }
 
     @Test
-    public void givenHeroAndFire_whenMoveHeroCollideWithFire_thenMoveSucceededAndHeroLostTenHpAndFireRemoved() {
+    void givenHeroAndFire_whenMoveHeroCollideWithFire_thenMoveSucceededAndHeroLostTenHpAndFireRemoved() {
         // arrange
         Hero first = givenHeroAt(0);
         Fire second = givenFireAt(1);
@@ -61,13 +61,13 @@ public class WorldTest {
         moveFirstSpriteOneStep();
 
         // assert
-        assertEquals(first, this.world.sprites.head);
-        assertEquals(20, ((Hero) this.world.sprites.head).hp);
-        assertNull(this.world.sprites.head.next);
+        assertEquals(first, this.world.sprites.getSprites());
+        assertEquals(20, ((Hero) this.world.sprites.getSprites()).getHp());
+        assertNull(this.world.sprites.getSprites().getNext());
     }
 
     @Test
-    public void givenFireHero_whenMoveFireCollideWithHero_thenFireRemovedAndHeroLostTenHp() {
+    void givenFireHero_whenMoveFireCollideWithHero_thenFireRemovedAndHeroLostTenHp() {
         // arrange
         Fire first = givenFireAt(0);
         Hero second = givenHeroAt(1);
@@ -77,13 +77,13 @@ public class WorldTest {
         moveFirstSpriteOneStep();
 
         // assert
-        assertEquals(second, this.world.sprites.head);
-        assertEquals(20, ((Hero) this.world.sprites.head).hp);
-        assertNull(this.world.sprites.head.next);
+        assertEquals(second, this.world.sprites.getSprites());
+        assertEquals(20, ((Hero) this.world.sprites.getSprites()).getHp());
+        assertNull(this.world.sprites.getSprites().getNext());
     }
 
     @Test
-    public void givenTwoHero_whenMoveHeroCollideWithTheOther_thenMoveFailed() {
+    void givenTwoHero_whenMoveHeroCollideWithTheOther_thenMoveFailed() {
         // arrange
         Hero first = givenHeroAt(0);
         Hero second = givenHeroAt(1);
@@ -93,12 +93,12 @@ public class WorldTest {
         moveFirstSpriteOneStep();
 
         // assert
-        assertEquals(first, this.world.sprites.head);
-        assertEquals(second, this.world.sprites.head.next);
+        assertEquals(first, this.world.sprites.getSprites());
+        assertEquals(second, this.world.sprites.getSprites().getNext());
     }
 
     @Test
-    public void givenHeroAndWater_whenMoveHeroCollideWithWater_thenMoveSucceededAndHeroGainedTenHpAndWaterRemoved() {
+    void givenHeroAndWater_whenMoveHeroCollideWithWater_thenMoveSucceededAndHeroGainedTenHpAndWaterRemoved() {
         // arrange
         Hero first = givenHeroAt(0);
         Water second = givenWaterAt(1);
@@ -108,13 +108,13 @@ public class WorldTest {
         moveFirstSpriteOneStep();
 
         // assert
-        assertEquals(first, this.world.sprites.head);
-        assertEquals(40, ((Hero) this.world.sprites.head).hp);
-        assertNull(this.world.sprites.head.next);
+        assertEquals(first, this.world.sprites.getSprites());
+        assertEquals(40, ((Hero) this.world.sprites.getSprites()).getHp());
+        assertNull(this.world.sprites.getSprites().getNext());
     }
 
     @Test
-    public void givenWaterAndHero_whenMoveWaterCollideWithHero_thenWaterRemovedAndHeroGainedTenHp() {
+    void givenWaterAndHero_whenMoveWaterCollideWithHero_thenWaterRemovedAndHeroGainedTenHp() {
         // arrange
         Water first = givenWaterAt(0);
         Hero second = givenHeroAt(1);
@@ -124,13 +124,13 @@ public class WorldTest {
         moveFirstSpriteOneStep();
 
         // assert
-        assertEquals(second, this.world.sprites.head);
-        assertEquals(40, ((Hero) this.world.sprites.head).hp);
-        assertNull(this.world.sprites.head.next);
+        assertEquals(second, this.world.sprites.getSprites());
+        assertEquals(40, ((Hero) this.world.sprites.getSprites()).getHp());
+        assertNull(this.world.sprites.getSprites().getNext());
     }
 
     @Test
-    public void givenWaterAndFire_whenMoveWaterCollideWithFire_thenBothWaterAndFireRemoved() {
+    void givenWaterAndFire_whenMoveWaterCollideWithFire_thenBothWaterAndFireRemoved() {
         // arrange
         Water first = givenWaterAt(0);
         Fire second = givenFireAt(1);
@@ -140,11 +140,11 @@ public class WorldTest {
         moveFirstSpriteOneStep();
 
         // assert
-        assertNull(this.world.sprites.head);
+        assertNull(this.world.sprites.getSprites());
     }
 
     @Test
-    public void givenTwoWater_whenMoveFirstWaterCollideWithTheOther_thenMoveFailed() {
+    void givenTwoWater_whenMoveFirstWaterCollideWithTheOther_thenMoveFailed() {
         // arrange
         Water first = givenWaterAt(0);
         Water second = givenWaterAt(1);
@@ -154,8 +154,8 @@ public class WorldTest {
         moveFirstSpriteOneStep();
 
         // assert
-        assertEquals(first, this.world.sprites.head);
-        assertEquals(second, this.world.sprites.head.next);
+        assertEquals(first, this.world.sprites.getSprites());
+        assertEquals(second, this.world.sprites.getSprites().getNext());
     }
 
     private void givenWorld(CollisionHandler collisionHandler, Sprite... sprites) {

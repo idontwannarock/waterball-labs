@@ -2,10 +2,14 @@ package org.example.collisiondetection.sprites;
 
 public class Hero extends Sprite {
 
-    public int hp = 30;
+    private int hp = 30;
 
     public Hero(int coordinate) {
         super(coordinate, "H");
+    }
+
+    public int getHp() {
+        return this.hp;
     }
 
     /**

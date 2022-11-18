@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SpritesTest {
+class SpritesTest {
 
     private Sprites sprites;
 
@@ -15,7 +15,7 @@ public class SpritesTest {
     }
 
     @Test
-    public void givenEmptySprites_whenAddingOneSprite_thenPlaceGivenSpriteAtHead() {
+    void givenEmptySprites_whenAddingOneSprite_thenPlaceGivenSpriteAtHead() {
         // arrange
         Hero sprite = givenHeroAt(0);
 
@@ -23,11 +23,11 @@ public class SpritesTest {
         addSprite(sprite);
 
         // assert
-        assertEquals(sprite.coordinate, this.sprites.head.coordinate);
+        assertEquals(sprite.getCoordinate(), this.sprites.getSprites().getCoordinate());
     }
 
     @Test
-    public void givenOneSpriteInSprites_whenAddingCloserSprite_thenInsertGivenSpriteAtHead() {
+    void givenOneSpriteInSprites_whenAddingCloserSprite_thenInsertGivenSpriteAtHead() {
         // arrange
         givenSpritesWith(givenHeroAt(1));
         Hero sprite = givenHeroAt(0);
@@ -36,11 +36,11 @@ public class SpritesTest {
         addSprite(sprite);
 
         // assert
-        assertEquals(sprite.coordinate, this.sprites.head.coordinate);
+        assertEquals(sprite.getCoordinate(), this.sprites.getSprites().getCoordinate());
     }
 
     @Test
-    public void givenOneSpriteInSprites_whenAddingFurtherSprite_thenAppendGivenSpriteAtTail() {
+    void givenOneSpriteInSprites_whenAddingFurtherSprite_thenAppendGivenSpriteAtTail() {
         // arrange
         givenSpritesWith(givenHeroAt(0));
         Hero sprite = givenHeroAt(1);
@@ -49,11 +49,11 @@ public class SpritesTest {
         addSprite(sprite);
 
         // assert
-        assertEquals(sprite.coordinate, this.sprites.head.next.coordinate);
+        assertEquals(sprite.getCoordinate(), this.sprites.getSprites().getNext().getCoordinate());
     }
 
     @Test
-    public void givenTwoSpriteInSprites_whenAddingMiddleSprite_thenInsertGivenSpriteInTheMiddle() {
+    void givenTwoSpriteInSprites_whenAddingMiddleSprite_thenInsertGivenSpriteInTheMiddle() {
         // arrange
         givenSpritesWith(givenHeroAt(0), givenHeroAt(2));
         Hero sprite = givenHeroAt(1);
@@ -62,17 +62,17 @@ public class SpritesTest {
         addSprite(sprite);
 
         // assert
-        assertEquals(sprite.coordinate, this.sprites.head.next.coordinate);
+        assertEquals(sprite.getCoordinate(), this.sprites.getSprites().getNext().getCoordinate());
     }
 
     @Test
-    public void givenEmptySprites_whenFindSpriteByCoordinate_thenThrowIllegalArgumentException() {
+    void givenEmptySprites_whenFindSpriteByCoordinate_thenThrowIllegalArgumentException() {
         // act and assert
         assertThrows(IllegalArgumentException.class, () -> findSpriteByCoordinate(0));
     }
 
     @Test
-    public void givenOneSpriteInSprites_whenFindSpriteOnEmptySpot_thenThrowIllegalArgumentException() {
+    void givenOneSpriteInSprites_whenFindSpriteOnEmptySpot_thenThrowIllegalArgumentException() {
         // arrange
         givenSpritesWith(givenHeroAt(0));
 
@@ -81,7 +81,7 @@ public class SpritesTest {
     }
 
     @Test
-    public void givenOneSpriteInSprites_whenFindSpriteOnNonEmptySpot_thenReturnGivenSprite() {
+    void givenOneSpriteInSprites_whenFindSpriteOnNonEmptySpot_thenReturnGivenSprite() {
         // arrange
         givenSpritesWith(givenHeroAt(0));
 
@@ -89,11 +89,11 @@ public class SpritesTest {
         Sprite actual = findSpriteByCoordinate(0);
 
         // assert
-        assertEquals(actual.coordinate, this.sprites.head.coordinate);
+        assertEquals(actual.getCoordinate(), this.sprites.getSprites().getCoordinate());
     }
 
     @Test
-    public void givenOneSpriteInSprites_whenMoveSpriteToAnotherSpot_thenMoveSucceeded() {
+    void givenOneSpriteInSprites_whenMoveSpriteToAnotherSpot_thenMoveSucceeded() {
         // arrange
         Hero sprite = givenHeroAt(0);
         givenSpritesWith(sprite);
@@ -102,11 +102,11 @@ public class SpritesTest {
         moveSpriteTo(sprite, 1);
 
         // assert
-        assertEquals(1, this.sprites.head.coordinate);
+        assertEquals(1, this.sprites.getSprites().getCoordinate());
     }
 
     @Test
-    public void givenTwoSpritesInSprites_whenMoveSecondSpriteToFurtherPlace_thenMoveSucceededWithOrderStaysTheSame() {
+    void givenTwoSpritesInSprites_whenMoveSecondSpriteToFurtherPlace_thenMoveSucceededWithOrderStaysTheSame() {
         // arrange
         Hero sprite = givenHeroAt(1);
         givenSpritesWith(givenHeroAt(0), sprite);
@@ -115,11 +115,11 @@ public class SpritesTest {
         moveSpriteTo(sprite, 2);
 
         // assert
-        assertEquals(2, this.sprites.head.next.coordinate);
+        assertEquals(2, this.sprites.getSprites().getNext().getCoordinate());
     }
 
     @Test
-    public void givenTwoSpritesInSprites_whenMoveFirstSpriteToFurtherThenSecond_thenMoveSucceededWithOrderInverted() {
+    void givenTwoSpritesInSprites_whenMoveFirstSpriteToFurtherThenSecond_thenMoveSucceededWithOrderInverted() {
         // arrange
         Hero sprite = givenHeroAt(0);
         givenSpritesWith(sprite, givenHeroAt(1));
@@ -128,12 +128,12 @@ public class SpritesTest {
         moveSpriteTo(sprite, 2);
 
         // assert
-        assertEquals(sprite, this.sprites.head.next);
-        assertEquals(2, this.sprites.head.next.coordinate);
+        assertEquals(sprite, this.sprites.getSprites().getNext());
+        assertEquals(2, this.sprites.getSprites().getNext().getCoordinate());
     }
 
     @Test
-    public void givenOneSpriteInSprites_whenRemoveOneExistingSprite_thenRemoveSucceeded() {
+    void givenOneSpriteInSprites_whenRemoveOneExistingSprite_thenRemoveSucceeded() {
         // arrange
         Hero sprite = givenHeroAt(0);
         givenSpritesWith(sprite);
@@ -142,11 +142,11 @@ public class SpritesTest {
         remove(sprite);
 
         // assert
-        assertNull(this.sprites.head);
+        assertNull(this.sprites.getSprites());
     }
 
     @Test
-    public void givenTwoSpriteInSprites_whenRemoveTailSprite_thenReturnSpritesWithOnlyTheFirstSprite() {
+    void givenTwoSpriteInSprites_whenRemoveTailSprite_thenReturnSpritesWithOnlyTheFirstSprite() {
         // arrange
         Hero first = givenHeroAt(0);
         Hero second = givenHeroAt(1);
@@ -156,12 +156,12 @@ public class SpritesTest {
         remove(second);
 
         // assert
-        assertEquals(first, this.sprites.head);
-        assertNull(this.sprites.head.next);
+        assertEquals(first, this.sprites.getSprites());
+        assertNull(this.sprites.getSprites().getNext());
     }
 
     @Test
-    public void givenTwoSpriteInSprites_whenRemoveHeadSprite_thenReturnSpritesWithOnlyTheSecondSprite() {
+    void givenTwoSpriteInSprites_whenRemoveHeadSprite_thenReturnSpritesWithOnlyTheSecondSprite() {
         // arrange
         Hero first = givenHeroAt(0);
         Hero second = givenHeroAt(1);
@@ -171,16 +171,12 @@ public class SpritesTest {
         remove(first);
 
         // assert
-        assertEquals(second, this.sprites.head);
-        assertNull(this.sprites.head.next);
-    }
-
-    private Hero givenHeroAt(int coordinate) {
-        return new Hero(coordinate);
+        assertEquals(second, this.sprites.getSprites());
+        assertNull(this.sprites.getSprites().getNext());
     }
 
     @Test
-    public void givenThreeSpriteInSprites_whenRemoveMiddleSprite_thenReturnSpritesWithOnlyHeadAndTail() {
+    void givenThreeSpriteInSprites_whenRemoveMiddleSprite_thenReturnSpritesWithOnlyHeadAndTail() {
         // arrange
         Hero first = givenHeroAt(0);
         Hero middle = givenHeroAt(1);
@@ -191,8 +187,12 @@ public class SpritesTest {
         remove(middle);
 
         // assert
-        assertEquals(first, this.sprites.head);
-        assertEquals(tail, this.sprites.head.next);
+        assertEquals(first, this.sprites.getSprites());
+        assertEquals(tail, this.sprites.getSprites().getNext());
+    }
+
+    private Hero givenHeroAt(int coordinate) {
+        return new Hero(coordinate);
     }
 
     private void givenSpritesWith(Sprite... sprites) {

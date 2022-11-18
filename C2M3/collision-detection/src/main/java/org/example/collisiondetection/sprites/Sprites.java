@@ -8,7 +8,11 @@ public class Sprites {
     /**
      * Sprite with the smallest coordinate
      */
-    public Sprite head = null;
+    private Sprite head = null;
+
+    public Sprite getSprites() {
+        return this.head;
+    }
 
     public void add(Sprite sprite) {
         if (isTheFirstNode()) {
@@ -24,11 +28,11 @@ public class Sprites {
 
     public Sprite findBy(int coordinate) {
         if (this.head != null) {
-            if (this.head.coordinate == coordinate) return this.head;
+            if (this.head.getCoordinate() == coordinate) return this.head;
             Sprite current = this.head;
             while (current.hasNext()) {
-                current = current.next;
-                if (current.coordinate == coordinate) {
+                current = current.getNext();
+                if (current.getCoordinate() == coordinate) {
                     return current;
                 }
             }
@@ -38,30 +42,30 @@ public class Sprites {
 
     public void move(Sprite target, int coordinate) {
         remove(target);
-        target.coordinate = coordinate;
+        target.setCoordinate(coordinate);
         add(target);
     }
 
     public void remove(Sprite target) {
-        if (this.head.coordinate == target.coordinate) {
+        if (this.head.getCoordinate() == target.getCoordinate()) {
             if (!this.head.hasNext()) {
                 this.head = null;
                 return;
             }
-            this.head = this.head.next;
+            this.head = this.head.getNext();
             return;
         }
         Sprite current = this.head;
         while (current.hasNext()) {
-            current = current.next;
-            if (current.coordinate == target.coordinate) {
-                Sprite prev = current.prev;
-                prev.next = null;
-                current.prev = null;
+            current = current.getNext();
+            if (current.getCoordinate() == target.getCoordinate()) {
+                Sprite prev = current.getPrev();
+                prev.setNext(null);
+                current.setPrev(null);
                 if (current.hasNext()) {
-                    prev.next = current.next;
-                    current.next.prev = prev;
-                    current.next = null;
+                    prev.setNext(current.getNext());
+                    current.getNext().setPrev(prev);
+                    current.setNext(null);
                 }
                 break;
             }
@@ -70,11 +74,11 @@ public class Sprites {
 
     public void print() {
         Sprite current = this.head;
-        System.out.print(current.getName() + ":" + current.coordinate);
+        System.out.print(current.getName() + ":" + current.getCoordinate());
         while (current.hasNext()) {
-            current = current.next;
+            current = current.getNext();
             System.out.print(", ");
-            System.out.print(current.getName() + ":" + current.coordinate);
+            System.out.print(current.getName() + ":" + current.getCoordinate());
         }
         System.out.println();
     }
@@ -88,45 +92,45 @@ public class Sprites {
     }
 
     private boolean isHead(Sprite sprite) {
-        return this.head.coordinate > sprite.coordinate;
+        return this.head.getCoordinate() > sprite.getCoordinate();
     }
 
     private void insertHeadNode(Sprite sprite) {
-        this.head.prev = sprite;
-        sprite.next = this.head;
+        this.head.setPrev(sprite);
+        sprite.setNext(this.head);
         this.head = sprite;
     }
 
     private boolean isTail(Sprite sprite) {
         Sprite current = this.head;
         while (current.hasNext()) {
-            if (current.coordinate > sprite.coordinate) {
+            if (current.getCoordinate() > sprite.getCoordinate()) {
                 return false;
             }
-            current = current.next;
+            current = current.getNext();
         }
-        return current.coordinate <= sprite.coordinate;
+        return current.getCoordinate() <= sprite.getCoordinate();
     }
 
     private void appendTailNode(Sprite sprite) {
         Sprite current = this.head;
         while (current.hasNext()) {
-            current = current.next;
+            current = current.getNext();
         }
-        current.next = sprite;
-        sprite.prev = current;
+        current.setNext(sprite);
+        sprite.setPrev(current);
     }
 
     private void insertMiddleNode(Sprite sprite) {
         Sprite current = this.head;
         while (current.hasNext()) {
-            current = current.next;
-            if (sprite.coordinate < current.coordinate) {
-                Sprite prev = current.prev;
-                prev.next = sprite;
-                current.prev = sprite;
-                sprite.prev = prev;
-                sprite.next = current;
+            current = current.getNext();
+            if (sprite.getCoordinate() < current.getCoordinate()) {
+                Sprite prev = current.getPrev();
+                prev.setNext(sprite);
+                current.setPrev(sprite);
+                sprite.setPrev(prev);
+                sprite.setNext(current);
                 break;
             }
         }

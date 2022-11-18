@@ -53,13 +53,13 @@ public class World {
     }
 
     private boolean destinationNotReached(Sprite current, int destination) {
-        return current.coordinate != destination;
+        return current.getCoordinate() != destination;
     }
 
     private boolean isThereSpriteAhead(Sprite current, int destination) {
         return current.isMovingForward(destination)
-                ? current.hasNext() && current.next.coordinate <= destination
-                : current.hasPrev() && current.prev.coordinate >= destination;
+                ? current.hasNext() && current.getNext().getCoordinate() <= destination
+                : current.hasPrev() && current.getPrev().getCoordinate() >= destination;
     }
 
     private boolean moveToTheNextSpriteCoordinate(Sprite target, int destination) {
